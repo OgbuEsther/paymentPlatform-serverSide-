@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import userRouter from "./routes/user.routes";
 
 const port: number = 6400;
 
@@ -25,6 +26,8 @@ app.get("/", (req: Request, res: Response) => {
     message: "api is ready for consumption",
   });
 });
+
+app.use("/api/user", userRouter);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
