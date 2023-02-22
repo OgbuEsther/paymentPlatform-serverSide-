@@ -22,7 +22,10 @@ export const registerUser = async (
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const genNumber = Math.floor(Math.random() * 7000) + 69069648;
+    const genDate = Date.now();
+    console.log(genDate);
+
+    const genNumber = Math.floor(Math.random() * 52) + genDate;
 
     const user = await userModel.create({
       name,
@@ -31,12 +34,16 @@ export const registerUser = async (
       password: hashedPassword,
       verified: true,
       phoneNumber,
-      accountNumber,
+      accountNumber: genNumber,
     });
 
     return res.status(201).json({
       message: "created a user",
       data: user,
+      token: jwt.sign(
+        { _id: user._id },
+        "wearetheherosandweareheretosavetheday"
+      ),
     });
   } catch (error) {
     return res.status(400).json({
