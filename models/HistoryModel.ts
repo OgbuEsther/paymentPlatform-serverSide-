@@ -10,7 +10,7 @@ const historySchema = new mongoose.Schema<HistoryData>(
     },
 
     transactionReference: {
-      type: String,
+      type: Number,
     },
 
     transactionType: {
@@ -20,9 +20,9 @@ const historySchema = new mongoose.Schema<HistoryData>(
   { timestamps: true }
 );
 
-const walletModel = mongoose.model<History>(
+const historyModel = mongoose.model<History>(
   "historyCollections",
   historySchema
 );
 
-export default walletModel;
+export default historyModel;
