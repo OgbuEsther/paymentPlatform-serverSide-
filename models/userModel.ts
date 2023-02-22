@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema<userData>({
   },
   email: {
     type: String,
+    required: true,
+    trim: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -20,4 +23,22 @@ const userSchema = new mongoose.Schema<userData>({
   userName: {
     type: String,
   },
+
+  verified: {
+    type: Boolean,
+  },
+  wallet: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "walletCollections",
+    },
+  ],
+  history: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "historyCollections",
+    },
+  ],
 });
+
+const userModel = mongoose.model<user>("");
