@@ -71,6 +71,82 @@ export const registerUser = async (
 
 //transfer to another wallet
 
+export const MakeTransfer = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const { accountNumber, amount } = req.body;
+
+    const referenceGeneratedNumber = Math.floor(Math.random() * 67485753) + 234;
+
+    //receiver account
+
+    const getReceiver = await userModel.findOne({ accountNumber });
+    const getReceiverWallet = await walletModel.findById(getReceiver?._id);
+
+    //sender account
+    const getUser = await userModel.findById(req.params.userID);
+    const getUserWallet = await walletModel.findById(req.params.walletID);
+
+    if (getUser && getReceiver) {
+      if (amount > getUserWallet?.balance!) {
+        return res.status(404).json({
+          message: "insufficent funds",
+        });
+      } else {
+        //updating the sender wallet
+        await walletModel.findByIdAndUpdate(getUserWallet?._id, {
+          Balance: getUserWallet?.balance! - amount,
+          credit: 0,
+          debit: amount,
+        });
+
+        const createHistorySender = await historyModel.create({
+          message: `you have sent ${amount} to ${getReceiver?.name}`,
+          transactionType: "debit",
+          transactionReference: referenceGeneratedNumber,
+        });
+
+        getUser?.history?.push(
+          new mongoose.Types.ObjectId(createHistorySender?._id)
+        );
+        getUser?.save();
+
+        await walletModel.findByIdAndUpdate(getReceiverWallet?._id, {
+          Balance: getReceiverWallet?.balance! + amount,
+          credit: amount,
+          debit: 0,
+        });
+
+        const createHistoryReceiver = await historyModel.create({
+          message: `an amount of ${amount} has been sent to you by ${getUser?.name}`,
+          transactionType: "credit",
+          transactionReference: referenceGeneratedNumber,
+        });
+
+        getReceiver?.history?.push(
+          new mongoose.Types.ObjectId(createHistoryReceiver?._id)
+        );
+        getReceiver?.save();
+      }
+
+      return res.status(200).json({
+        message: "transaction successful",
+      });
+    } else {
+      return res.status(404).json({
+        message: "Account not found",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred while creating user",
+      data: error,
+    });
+  }
+};
+
 //get all
 
 export const getAllUsers = async (req: Request, res: Response) => {
