@@ -4,6 +4,8 @@ import { userData } from "../interfaces/userInterfaces";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import walletModel from "../models/walletModel";
+import mongoose from "mongoose";
+import historyModel from "../models/HistoryModel";
 
 export const registerUser = async (
   req: Request<{}, {}, userData>,
@@ -41,7 +43,7 @@ export const registerUser = async (
     });
 
     const createWallet = await walletModel.create({
-      _id: user._id,
+      _id: user?._id,
       balance: 1000,
       credit: 0,
       debit: 0,
@@ -62,6 +64,29 @@ export const registerUser = async (
   } catch (error) {
     return res.status(400).json({
       message: "an error occurred while creating user",
+      data: error,
     });
   }
 };
+
+//transfer to another wallet
+
+//get all
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const user = await userModel.find();
+
+    return res.status(200).json({
+      message: "gotten all users",
+      data: user,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred while creating user",
+      data: error,
+    });
+  }
+};
+
+//login user

@@ -1,5 +1,5 @@
 export interface HistoryData {
   message: string;
-  transactionType: boolean;
+  transactionType: string;
   transactionReference: number;
 }

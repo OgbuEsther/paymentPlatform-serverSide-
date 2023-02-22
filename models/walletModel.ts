@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 import { walletData } from "../interfaces/walletInterfaces";
 
-interface wallet extends walletData, mongoose.Document {
-  walletData;
-}
+interface wallet extends walletData, mongoose.Document {}
 
 const walletSchema = new mongoose.Schema<walletData>(
   {

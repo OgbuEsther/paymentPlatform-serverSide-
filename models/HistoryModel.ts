@@ -14,7 +14,7 @@ const historySchema = new mongoose.Schema<HistoryData>(
     },
 
     transactionType: {
-      type: Boolean,
+      type: String,
     },
   },
   { timestamps: true }
