@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import userRouter from "./routes/user.routes";
+import userRouter from "./routes/userRouter";
 
 const port: number = 6400;
 
