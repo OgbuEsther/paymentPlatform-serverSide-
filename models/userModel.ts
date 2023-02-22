@@ -56,3 +56,5 @@ const userSchema = new mongoose.Schema<userData>(
 );
 
 const userModel = mongoose.model<user>("userCollctions", userSchema);
+
+export default userModel;
