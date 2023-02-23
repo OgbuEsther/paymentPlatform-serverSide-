@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import walletModel from "../models/walletModel";
+import mongoose from "mongoose";
 
 //register user
 
