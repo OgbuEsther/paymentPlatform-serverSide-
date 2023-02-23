@@ -59,6 +59,7 @@ export const SignUp = async (
     return res.status(201).json({
       message: "User created successfully",
       data: newUser,
+      token: jwt.sign({ _id: newUser._id }, "wraytsrrwyhsdewt"),
     });
   } catch (error) {
     return res.status(400).json({
