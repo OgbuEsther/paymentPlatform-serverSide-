@@ -98,6 +98,20 @@ export const Transactions = async (
     const RefNum = Math.floor(Math.random() * 1112623);
 
     //get receiver's account
+    const getReciever = await userModel.findOne({ accountNumber });
+    const getRecieverWallet = await walletModel.findById(getReciever!._id);
+
+    //sender account
+    const getSender = await userModel.findById(req.params.senderId);
+    const getSenderWallet = await walletModel.findById(req.params.walletId);
+
+    if (getSender && getReciever) {
+      if (amount > getSenderWallet?.balance!) {
+        return res.status(400).json({
+          message: "your money no complete 😒😒🤦‍♀️",
+        });
+      }
+    }
   } catch (error) {
     return res.status(400).json({
       message: "an error occurred",
