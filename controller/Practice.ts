@@ -87,3 +87,21 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 //transactions
+
+export const Transactions = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const { accountNumber, amount } = req.body;
+
+    const RefNum = Math.floor(Math.random() * 1112623);
+
+    //get receiver's account
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred",
+      data: error,
+    });
+  }
+};
