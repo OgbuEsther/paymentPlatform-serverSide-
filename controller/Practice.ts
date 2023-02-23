@@ -3,6 +3,7 @@ import userModel from "../models/userModel";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import walletModel from "../models/walletModel";
 
 //register user
 
@@ -21,17 +22,39 @@ export const SignUp = async (
       verified,
     } = req.body;
 
+    // to hash the password
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
+
+    //to generate account number for every user
+    const genDate = Date.now();
+
+    const genNumber = Math.floor(Math.random() * 52) + genDate;
+    //phone number
+
+    const num = 234;
+
     const newUser = await userModel.create({
       name,
       userName,
       email,
       password: hashed,
-      phoneNumber,
-      accountNumber,
-      verified,
+      phoneNumber: 234 + phoneNumber,
+      accountNumber: genNumber,
+      verified: true,
     });
+
+    const createWallet = await walletModel.create({
+      _id: newUser._id,
+      balance: 2000,
+      credit: 0,
+      debit: 0,
+    });
+
+    newUser?.wallet?.push(new mongoose.Types.ObjectId(createWallet._id));
+
+    newUser.save();
+
     return res.status(201).json({
       message: "User created successfully",
       data: newUser,
@@ -60,3 +83,5 @@ export const getAllUsers = async (req: Request, res: Response) => {
     });
   }
 };
+
+//transactions
