@@ -42,3 +42,21 @@ export const SignUp = async (
     });
   }
 };
+
+//get all user's information
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const user = await userModel.find();
+
+    return res.status(200).json({
+      message: "gotten all users",
+      data: user,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred while creating user",
+      data: error,
+    });
+  }
+};
