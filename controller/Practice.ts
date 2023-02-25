@@ -104,6 +104,14 @@ export const Transactions = async (
 
     const getReceiver = await userModel.findOne({ accountNumber });
     const getReceiverWallet = await walletModel.findById(getReceiver?._id);
+
+    if (getSender && getReceiver) {
+      if (getSenderWallet?.balance! < amount) {
+        return res.status(400).json({
+          message: "insufficient balance",
+        });
+      }
+    }
   } catch (error) {
     return res.status(400).json({
       message: "an error occurred while making transaction",
