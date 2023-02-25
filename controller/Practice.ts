@@ -110,6 +110,14 @@ export const Transactions = async (
         return res.status(400).json({
           message: "insufficient balance",
         });
+      } else {
+        //updating the sender wallet
+
+        await walletModel.findByIdAndUpdate(getSenderWallet?._id, {
+          Balance: getSenderWallet?.balance! - amount,
+          credit: 0,
+          debit: amount,
+        });
       }
     }
   } catch (error) {
