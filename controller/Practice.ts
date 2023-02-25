@@ -87,3 +87,26 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 //transactions
+
+export const Transactions = async (
+  req: Request,
+  res: Response
+): Prom<Response> => {
+  try {
+    const { accountNumber, amount } = req.body;
+
+    //getting the sender
+
+    const getSender = await userModel.findById(req.params.senderId);
+    const getSenderWallet = await walletModel.findById(req.params.walletId);
+
+    //getting the receiver
+
+    const getReceiver = await userModel.findOne({ accountNumber });
+    const getReceiverWallet = await walletModel.findById(getReceiver?._id);
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred while making transaction",
+    });
+  }
+};
