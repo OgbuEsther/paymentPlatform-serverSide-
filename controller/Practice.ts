@@ -91,7 +91,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const Transactions = async (
   req: Request,
   res: Response
-): Prom<Response> => {
+): Promise<Response> => {
   try {
     const { accountNumber, amount } = req.body;
 
