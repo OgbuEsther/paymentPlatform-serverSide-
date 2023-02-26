@@ -109,7 +109,7 @@ export const transactions = async (req: Request, res: Response) => {
       } else {
         //upadting sender account
         await walletModel.findByIdAndUpdate(senderWallet?._id, {
-          Balance: senderWallet?.balance!,
+          Balance: senderWallet?.balance! - amount,
           credit: 0,
           debit: amount,
         });
@@ -122,9 +122,12 @@ export const transactions = async (req: Request, res: Response) => {
           message: `you have sent ${amount} to ${receiver?.name}`,
         });
 
+        sender?.history?.push(new mongoose.Types.ObjectId(senderHistory?._id));
+        sender.save();
+
         //updating receiver account
         await walletModel.findByIdAndUpdate(receiverWallet?._id, {
-          Balance: receiverWallet?.balance!,
+          Balance: receiverWallet?.balance! + amount,
           debit: 0,
           credit: amount,
         });
@@ -136,6 +139,11 @@ export const transactions = async (req: Request, res: Response) => {
           transactionReference: refNum,
           message: `you have received ${amount} from ${sender?.name}`,
         });
+
+        receiver?.history?.push(
+          new mongoose.Types.ObjectId(receiverHistory?._id)
+        );
+        receiver.save();
       }
     }
   } catch (error) {
