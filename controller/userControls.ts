@@ -97,7 +97,7 @@ export const MakeTransfer = async (
       } else {
         //updating the sender wallet
         await walletModel.findByIdAndUpdate(getUserWallet?._id, {
-          Balance: getUserWallet?.balance! - amount,
+          balance: getUserWallet?.balance! - amount,
           credit: 0,
           debit: amount,
         });
@@ -114,7 +114,7 @@ export const MakeTransfer = async (
         getUser?.save();
 
         await walletModel.findByIdAndUpdate(getReceiverWallet?._id, {
-          Balance: getReceiverWallet?.balance! + amount,
+          balance: getReceiverWallet?.balance! + amount,
           credit: amount,
           debit: 0,
         });
