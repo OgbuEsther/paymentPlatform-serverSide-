@@ -116,10 +116,25 @@ export const transactions = async (req: Request, res: Response) => {
 
         //getting sender transaction history
 
-        const senderHisstory = await historyModel.create({
+        const senderHistory = await historyModel.create({
           transactionType: "debit",
           transactionReference: refNum,
           message: `you have sent ${amount} to ${receiver?.name}`,
+        });
+
+        //updating receiver account
+        await walletModel.findByIdAndUpdate(receiverWallet?._id, {
+          Balance: receiverWallet?.balance!,
+          debit: 0,
+          credit: amount,
+        });
+
+        //getting receiver transaction history
+
+        const receiverHistory = await historyModel.create({
+          transactionType: "credit",
+          transactionReference: refNum,
+          message: `you have received ${amount} from ${sender?.name}`,
         });
       }
     }
