@@ -87,3 +87,36 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 //transactions
+
+export const transactions = async (req: Request, res: Response) => {
+  try {
+    const { accountNumber, amount } = req.body;
+
+    //get sender details
+    const sender = await userModel.findById(req.params.senderID);
+    const senderWallet = await walletModel.findById(sender?._id);
+
+    //get receiver details
+    const receiver = await userModel.findOne({ accountNumber });
+    const receiverWallet = await walletModel.findById(req.params.receiverID);
+
+    if (sender && receiver) {
+      if (amount > senderWallet?.balance!) {
+        return res.status(400).json({
+          message: "insufficient funds",
+        });
+      } else {
+        await walletModel.findByIdAndUpdate(senderWallet?._id, {
+          Balance: senderWallet?.balance!,
+          credit: 0,
+          debit: amount,
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred",
+      data: error,
+    });
+  }
+};
