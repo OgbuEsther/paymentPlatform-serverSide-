@@ -1,5 +1,5 @@
 import userModel from "../models/userModel";
-
+import historyModel from "../models/HistoryModel";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -92,6 +92,7 @@ export const transactions = async (req: Request, res: Response) => {
   try {
     const { accountNumber, amount } = req.body;
 
+    const refNum = (await Math.floor(Math.random() * 234)) + 2468;
     //get sender details
     const sender = await userModel.findById(req.params.senderID);
     const senderWallet = await walletModel.findById(sender?._id);
@@ -106,10 +107,19 @@ export const transactions = async (req: Request, res: Response) => {
           message: "insufficient funds",
         });
       } else {
+        //upadting sender account
         await walletModel.findByIdAndUpdate(senderWallet?._id, {
           Balance: senderWallet?.balance!,
           credit: 0,
           debit: amount,
+        });
+
+        //getting sender transaction history
+
+        const senderHisstory = await historyModel.create({
+          transactionType: "debit",
+          transactionReference: refNum,
+          message: `you have sent ${amount} to ${receiver?.name}`,
         });
       }
     }
