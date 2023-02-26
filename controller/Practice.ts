@@ -145,6 +145,10 @@ export const transactions = async (req: Request, res: Response) => {
         );
         receiver.save();
       }
+      return res.status(200).json({
+        message: "Success",
+        data: `transaction successful`,
+      });
     }
   } catch (error) {
     return res.status(400).json({
