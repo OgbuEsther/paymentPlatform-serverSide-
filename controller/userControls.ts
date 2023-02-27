@@ -176,11 +176,21 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const FundWallet = async (req: Request, res: Response) => {
   try {
+    const getUser = await userModel.findById(req.params.userId);
     const getWallet = await walletModel.findById(req.params.walletId);
 
-    const { amount } = req.body;
+    const { amount, transRef } = req.body;
 
-    await walletModel.findByIdAndUpdate(getWallet?._id, {});
+    await walletModel.findByIdAndUpdate(getWallet?._id, {
+      balance: getWallet?.balance! + amount,
+    });
+
+    const getWalletHistory = await historyModel.create({
+      message: `an amount of ${amount} has been sent to you`,
+      transactionType: "credit",
+      transactionReference: transRef,
+    });
+    getUser?.history?.push(new mongoose.Types.ObjectId(getWalletHistory?._id));
   } catch (error) {
     return res.status(400).json({
       message: "an error occurred while making transations ",
