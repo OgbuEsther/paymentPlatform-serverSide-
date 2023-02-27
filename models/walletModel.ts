@@ -16,6 +16,24 @@ const walletSchema = new mongoose.Schema<walletData>(
     debit: {
       type: Number,
     },
+    quickSave: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "",
+      },
+    ],
+    saveLock: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "",
+      },
+    ],
+    target: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "",
+      },
+    ],
   },
   { timestamps: true }
 );
