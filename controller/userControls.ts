@@ -171,3 +171,15 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 //login user
+
+//transfer from your bank to your wallet
+
+export const FundWallet = async (req: Request, res: Response) => {
+  try {
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred while making transations ",
+      data: error,
+    });
+  }
+};
