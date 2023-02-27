@@ -176,11 +176,15 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const FundWallet = async (req: Request, res: Response) => {
   try {
+    //get user details
     const getUser = await userModel.findById(req.params.userId);
+    //get wallet details
     const getWallet = await walletModel.findById(req.params.walletId);
 
+    //make request from the body
     const { amount, transRef } = req.body;
 
+    //updating balance
     await walletModel.findByIdAndUpdate(getWallet?._id, {
       balance: getWallet?.balance + amount,
     });
