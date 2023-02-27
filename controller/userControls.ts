@@ -191,6 +191,11 @@ export const FundWallet = async (req: Request, res: Response) => {
       transactionReference: transRef,
     });
     getUser?.history?.push(new mongoose.Types.ObjectId(getWalletHistory?._id));
+    getUser?.save();
+
+    return res.status(200).json({
+      message: `transfer sucessful`,
+    });
   } catch (error) {
     return res.status(400).json({
       message: "an error occurred while making transations ",
