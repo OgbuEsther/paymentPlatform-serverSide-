@@ -19,19 +19,19 @@ const walletSchema = new mongoose.Schema<walletData>(
     quickSave: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "",
+        ref: "quickSaveCollections",
       },
     ],
     saveLock: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "",
+        ref: "lockCollections",
       },
     ],
     target: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "",
+        ref: "targetCollections",
       },
     ],
   },
