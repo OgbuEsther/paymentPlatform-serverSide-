@@ -177,7 +177,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const FundWallet = async (req: Request, res: Response) => {
   try {
     const getUser = await userModel.findById(req.params.userId);
-    const getWallet = await walletModel.findById(getUser?._id);
+    const getWallet = await walletModel.findById(req.params.walletId);
 
     const { amount, transRef } = req.body;
 
