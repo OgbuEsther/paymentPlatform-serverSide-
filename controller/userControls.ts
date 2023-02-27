@@ -176,6 +176,11 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const FundWallet = async (req: Request, res: Response) => {
   try {
+    const getWallet = await walletModel.findById(req.params.walletId);
+
+    const { amount } = req.body;
+
+    await walletModel.findByIdAndUpdate(getWallet?._id, {});
   } catch (error) {
     return res.status(400).json({
       message: "an error occurred while making transations ",
