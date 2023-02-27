@@ -90,6 +90,11 @@ export const MakeTransfer = async (
     const getUserWallet = await walletModel.findById(req.params.walletID);
 
     if (getUser && getReceiver) {
+      if (getUser.accountNumber === accountNumber) {
+        return res.status(400).json({
+          message: `bad request , you can't send money to yourself`,
+        });
+      }
       if (amount > getUserWallet?.balance!) {
         return res.status(404).json({
           message: "insufficent funds",
@@ -120,7 +125,7 @@ export const MakeTransfer = async (
         });
 
         const createHistoryReceiver = await historyModel.create({
-          message: `an amount of ${amount} has been sent to you by ${getUser?.name}`,
+          message: `an amount of ${amount} has been|  sent to you by ${getUser?.name}`,
           transactionType: "credit",
           transactionReference: referenceGeneratedNumber,
         });
