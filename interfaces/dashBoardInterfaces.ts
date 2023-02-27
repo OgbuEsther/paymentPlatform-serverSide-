@@ -4,3 +4,7 @@ export interface quicksave {
   dateTime: string | number;
   interest: number;
 }
+
+export interface locks {}
+
+export interface target {}

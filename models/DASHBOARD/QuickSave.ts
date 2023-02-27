@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { quicksave } from "../../interfaces/QuickSaveInterface";
+import { quicksave } from "../../interfaces/dashBoardInterfaces";
 
 interface quickSaveInfo extends quicksave, mongoose.Document {}
 
