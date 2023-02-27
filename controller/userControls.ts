@@ -182,11 +182,11 @@ export const FundWallet = async (req: Request, res: Response) => {
     const { amount, transRef } = req.body;
 
     await walletModel.findByIdAndUpdate(getWallet?._id, {
-      balance: getWallet?.balance! + amount,
+      balance: getWallet?.balance + amount,
     });
 
     const getWalletHistory = await historyModel.create({
-      message: `an amount of ${amount} has been sent to you`,
+      message: `you transferred ${amount} to yourself`,
       transactionType: "credit",
       transactionReference: transRef,
     });
