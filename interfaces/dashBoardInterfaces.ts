@@ -5,6 +5,19 @@ export interface quicksave {
   interest: number;
 }
 
-export interface locks {}
+export interface locks {
+  amount: number;
+  payBackTime: string;
+  interest: number;
+  lock: boolean;
+  title: string;
+}
 
-export interface target {}
+export interface target {
+  amount: number;
+  fixedAmount: number;
+  interest: number;
+  dateTime: string;
+  title: string;
+  targetValue: boolean;
+}
