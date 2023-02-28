@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import locks from "../interface/dashBoardInterfaces";
+import { locks } from "../../interfaces/dashBoardInterfaces";
 
 interface SaveLock extends locks, mongoose.Document {}
 
@@ -13,7 +13,7 @@ const saveLockSchema = new mongoose.Schema<locks>(
       type: Boolean,
     },
 
-    PayBackTime: {
+    payBackTime: {
       type: String,
     },
 

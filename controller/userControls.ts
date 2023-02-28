@@ -125,7 +125,7 @@ export const MakeTransfer = async (
         });
 
         const createHistoryReceiver = await historyModel.create({
-          message: `an amount of ${amount} has been|  sent to you by ${getUser?.name}`,
+          message: `an amount of ${amount} has been sent to you by ${getUser?.name}`,
           transactionType: "credit",
           transactionReference: referenceGeneratedNumber,
         });
