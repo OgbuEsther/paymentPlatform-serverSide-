@@ -13,7 +13,7 @@ const quickSaveSchema = new mongoose.Schema<quicksave>(
       type: Number,
     },
     interest: {
-      type: Number,
+      type: Number || String,
     },
 
     autoSave: {
