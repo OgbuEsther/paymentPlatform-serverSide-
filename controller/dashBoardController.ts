@@ -18,6 +18,13 @@ export const createQuickSave = async (
         message:
           "This transaction cannot be completed because of insufficient balance",
       });
+    } else {
+      const creating = await quickSaveModel.create({
+        amount,
+        autoSave: false,
+        dateTime: newDate,
+        interest: 0.1,
+      });
     }
   } catch (error) {
     return res.status(404).json({
