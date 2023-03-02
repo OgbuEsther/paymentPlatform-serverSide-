@@ -58,6 +58,9 @@ export const claimDaily = async (
     await quickSaveModel.findByIdAndUpdate(getSaveId?._id, {
       amount: getSaveId?.amount! * dailyInterest + getSaveId?.amount!,
     });
+    return res.status(200).json({
+      message: "successfull",
+    });
   } catch (error) {
     return res.status(404).json({
       message: "an error occured",
