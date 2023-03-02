@@ -12,6 +12,9 @@ const TargetSchema = new mongoose.Schema<target>(
     targetValue: {
       type: Boolean,
     },
+    targetBalance: {
+      type: Number,
+    },
 
     fixedAmount: {
       type: Number,
