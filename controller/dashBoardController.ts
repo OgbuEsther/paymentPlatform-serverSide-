@@ -29,6 +29,9 @@ export const createQuickSave = async (
       await walletModel.findByIdAndUpdate(getWallet?._id, {
         balance: getWallet?.balance! - amount,
       });
+
+      getWallet?.quickSave?.push(new mongoose.Types.ObjectId(creating?._id));
+      getWallet?.save();
     }
   } catch (error) {
     return res.status(404).json({
