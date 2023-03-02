@@ -6,6 +6,7 @@ export interface userData {
   phoneNumber: number;
   userName: string;
   verified: boolean;
+  isAdmin: boolean;
   wallet: {}[];
   history: {}[];
 }
