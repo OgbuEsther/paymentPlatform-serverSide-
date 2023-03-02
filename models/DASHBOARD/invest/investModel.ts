@@ -46,3 +46,5 @@ const investModel = mongoose.model<investData>(
   "investCollections",
   investSchema
 );
+
+export default investModel;
