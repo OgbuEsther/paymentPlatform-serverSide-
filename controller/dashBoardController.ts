@@ -51,6 +51,13 @@ export const claimDaily = async (
   res: Response
 ): Promise<Response> => {
   try {
+    const getSaveId = await quickSaveModel.findById(req.params.saveId);
+
+    const dailyInterest = 0.1 * (1 / 365);
+
+    await quickSaveModel.findByIdAndUpdate(getSaveId?._id, {
+      amount: getSaveId?.amount!,
+    });
   } catch (error) {
     return res.status(404).json({
       message: "an error occured",
