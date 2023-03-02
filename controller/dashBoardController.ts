@@ -32,6 +32,10 @@ export const createQuickSave = async (
 
       getWallet?.quickSave?.push(new mongoose.Types.ObjectId(creating?._id));
       getWallet?.save();
+
+      return res.status(200).json({
+        message: "quick save created successfully",
+      });
     }
   } catch (error) {
     return res.status(404).json({
