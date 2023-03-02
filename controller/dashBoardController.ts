@@ -9,6 +9,16 @@ export const createQuickSave = async (
 ): Promise<Response> => {
   try {
     const { amount } = req.body;
+    const getWallet = await walletModel.findById(req.params.walletId);
+
+    const newDate = new Date().toDateString();
+
+    if (amount > getWallet?.balance!) {
+      return res.status(400).json({
+        message:
+          "This transaction cannot be completed because of insufficient balance",
+      });
+    }
   } catch (error) {
     return res.status(404).json({
       message: "an error occured",
