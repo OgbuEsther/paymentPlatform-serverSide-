@@ -9,29 +9,40 @@ export const createInvestify = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const getUser = await userModel.findById(req.params.id);
+  try {
+    const getUser = await userModel.findById(req.params.id);
 
-  const getDate = new Date().toDateString();
+    const getDate = new Date().toDateString();
 
-  if (getUser?.isAdmin === true) {
-    const {
-      title,
+    if (getUser?.isAdmin === true) {
+      const {
+        title,
 
-      description,
+        description,
 
-      duration,
+        duration,
 
-      amountPerUnit,
-    } = req.body;
+        amountPerUnit,
+      } = req.body;
 
-    const creating = await investModel.create({
-      title,
-      description,
-      startTime: getDate,
-      duration,
-      status: true,
-      totalUnit: 200,
-      amountPerUnit,
+      const creating = await investModel.create({
+        title,
+        description,
+        startTime: getDate,
+        duration,
+        status: true,
+        totalUnit: 200,
+        amountPerUnit,
+      });
+      return res.status(200).json(creating);
+    } else {
+      return res.status(404).json({
+        message: "UnAuthorized User",
+      });
+    }
+  } catch (error) {
+    return res.status(404).json({
+      message: "an error occurred while creating",
     });
   }
 };
