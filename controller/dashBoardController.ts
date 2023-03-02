@@ -25,6 +25,10 @@ export const createQuickSave = async (
         dateTime: newDate,
         interest: 0.1,
       });
+
+      await walletModel.findByIdAndUpdate(getWallet?._id, {
+        balance: getWallet?.balance! - amount,
+      });
     }
   } catch (error) {
     return res.status(404).json({
