@@ -56,7 +56,7 @@ export const claimDaily = async (
     const dailyInterest = 0.1 * (1 / 365);
 
     await quickSaveModel.findByIdAndUpdate(getSaveId?._id, {
-      amount: getSaveId?.amount!,
+      amount: getSaveId?.amount! * dailyInterest + getSaveId?.amount!,
     });
   } catch (error) {
     return res.status(404).json({
