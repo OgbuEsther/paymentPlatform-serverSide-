@@ -43,3 +43,17 @@ export const createQuickSave = async (
     });
   }
 };
+
+//claim daily interest
+
+export const claimDaily = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+  } catch (error) {
+    return res.status(404).json({
+      message: "an error occured",
+    });
+  }
+};
