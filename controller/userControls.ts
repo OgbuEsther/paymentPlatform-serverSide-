@@ -169,6 +169,21 @@ export const getAllUsers = async (req: Request, res: Response) => {
     });
   }
 };
+export const getOneUsers = async (req: Request, res: Response) => {
+  try {
+    const user = await userModel.findById(req.params.id);
+
+    return res.status(200).json({
+      message: "gotten one user",
+      data: user,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "an error occurred while creating user",
+      data: error,
+    });
+  }
+};
 
 //login user
 
