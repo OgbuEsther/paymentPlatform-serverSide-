@@ -81,6 +81,18 @@ export const investNow = async (
         new mongoose.Types.ObjectId(createInvestor?._id)
       );
       getInvestment?.save();
+
+      //pushing the investment to my wallet so that i can see all investments i am part of
+
+      await walletModel.findByIdAndUpdate(getWallet?._id, {
+        $push: { myInvestment: getInvestment?._id },
+      });
+
+      //updating my wallet balance
+
+      await walletModel.findByIdAndUpdate(getWallet?._id, {
+        balance: getWallet?.balance! - getInvestment?.amountPerUnit! * unit,
+      });
     }
   } catch (error) {
     return res.status(404).json({
