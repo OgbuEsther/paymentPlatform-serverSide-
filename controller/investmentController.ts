@@ -69,11 +69,18 @@ export const investNow = async (
         message: "insufficient funds",
       });
     } else {
-      const createInvestor = await Investors.create({
+      const createInvestor = await investorModel.create({
         investorId: getUser?._id,
         amount: getInvestment?.amountPerUnit! * unit,
         unit,
       });
+
+      //pushing the investor to the investment
+
+      getInvestment?.investors.push(
+        new mongoose.Types.ObjectId(createInvestor?._id)
+      );
+      getInvestment?.save();
     }
   } catch (error) {
     return res.status(404).json({
