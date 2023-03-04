@@ -93,6 +93,12 @@ export const investNow = async (
       await walletModel.findByIdAndUpdate(getWallet?._id, {
         balance: getWallet?.balance! - getInvestment?.amountPerUnit! * unit,
       });
+
+      //updating the unit
+
+      await investModel.findByIdAndUpdate(getInvestment?._id, {
+        totalUnit: getInvestment?.totalUnit - unit,
+      });
     }
   } catch (error) {
     return res.status(404).json({
