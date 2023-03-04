@@ -68,6 +68,12 @@ export const investNow = async (
       return res.status(404).json({
         message: "insufficient funds",
       });
+    } else {
+      const createInvestor = await Investors.create({
+        investorId: getUser?._id,
+        amount: getInvestment?.amountPerUnit! * unit,
+        unit,
+      });
     }
   } catch (error) {
     return res.status(404).json({
