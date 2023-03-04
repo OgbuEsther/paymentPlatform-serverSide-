@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/userRouter";
+import quickSaveRoutes from "./routes/QuickSaveRoutes";
 
 const port: number = 6400;
 
@@ -28,7 +29,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/user", userRouter);
-
+app.use("/api/quick", quickSaveRoutes);
+app.use("/api/investment", InvestRoute);
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
