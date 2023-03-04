@@ -61,6 +61,14 @@ export const investNow = async (
 
     const getInvestment = await investModel.findById(req.params.investId);
     const getUser = await userModel.findById(req.params.userId);
+
+    //this is to check the balance of your wallet
+
+    if (getInvestment?.amountPerUnit! * unit > getWallet?.balance!) {
+      return res.status(404).json({
+        message: "insufficient funds",
+      });
+    }
   } catch (error) {
     return res.status(404).json({
       message: "an error occurred while creating",
