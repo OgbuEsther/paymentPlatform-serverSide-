@@ -97,7 +97,11 @@ export const investNow = async (
       //updating the unit
 
       await investModel.findByIdAndUpdate(getInvestment?._id, {
-        totalUnit: getInvestment?.totalUnit - unit,
+        totalUnit: getInvestment?.totalUnit! - unit,
+      });
+
+      return res.status(200).json({
+        message: "successfull",
       });
     }
   } catch (error) {
