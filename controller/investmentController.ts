@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import investModel from "../models/DASHBOARD/invest/investModel";
 import investorModel from "../models/DASHBOARD/invest/investors";
 import userModel from "../models/userModel";
+import walletModel from "../models/walletModel";
 
 export const createInvestify = async (
   req: Request,
@@ -40,6 +41,26 @@ export const createInvestify = async (
         message: "UnAuthorized User",
       });
     }
+  } catch (error) {
+    return res.status(404).json({
+      message: "an error occurred while creating",
+    });
+  }
+};
+
+//
+
+export const investNow = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const getWallet = await walletModel.findById(req.params.walletId);
+
+    const { unit } = req.body;
+
+    const getInvestment = await investModel.findById(req.params.investId);
+    const getUser = await userModel.findById(req.params.userId);
   } catch (error) {
     return res.status(404).json({
       message: "an error occurred while creating",
