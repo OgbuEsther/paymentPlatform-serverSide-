@@ -171,7 +171,9 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 export const getOneUsers = async (req: Request, res: Response) => {
   try {
-    const user = await userModel.findById(req.params.id);
+    const user = await userModel.findById(req.params.id).populate({
+      path: "wallet",
+    });
 
     return res.status(200).json({
       message: "gotten one user",
