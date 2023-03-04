@@ -6,4 +6,5 @@ export interface walletData {
   saveLock: {}[];
   target: {}[];
   invest: {}[];
+  myInvestment: [];
 }

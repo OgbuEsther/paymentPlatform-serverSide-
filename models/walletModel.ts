@@ -40,6 +40,7 @@ const walletSchema = new mongoose.Schema<walletData>(
         ref: "investCollections",
       },
     ],
+    myInvestment: [],
   },
   { timestamps: true }
 );
