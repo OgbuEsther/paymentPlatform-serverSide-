@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/userRouter";
 import quickSaveRoutes from "./routes/QuickSaveRoutes";
+import InvestmentRoutes from "./routes/InvestmentRoutes";
 
 const port: number = 6400;
 
@@ -30,7 +31,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/user", userRouter);
 app.use("/api/quick", quickSaveRoutes);
-app.use("/api/investment", InvestRoute);
+app.use("/api/investment", InvestmentRoutes);
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
